@@ -1,9 +1,10 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import axios, { AxiosRequestConfig } from 'axios'
-import qs from 'qs';
 import { wrapper } from 'axios-cookiejar-support';
 import { CookieJar } from 'tough-cookie';
+import qs from 'qs';
+import cheerio from 'cheerio'
 
 interface AxiosCookiesConfig extends AxiosRequestConfig {
   jar: CookieJar
@@ -33,7 +34,14 @@ export class AppController {
         withCredentials: true
       }
     )
-    return login.data
+
+    const collectInfo = await this.client.get('http://192.168.1.75/m_departmentid.html')
+
+    const $ = cheerio.load(collectInfo.data)
+
+    const tableInfo = $('.ModuleElement')
+
+    return collectInfo.data
   }
 
   @Get()
