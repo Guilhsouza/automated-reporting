@@ -4,7 +4,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 import { wrapper } from 'axios-cookiejar-support';
 import { CookieJar } from 'tough-cookie';
 import qs from 'qs';
-import cheerio from 'cheerio'
+import * as cheerio from 'cheerio'
 
 interface AxiosCookiesConfig extends AxiosRequestConfig {
   jar: CookieJar
@@ -13,8 +13,8 @@ interface AxiosCookiesConfig extends AxiosRequestConfig {
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
+  private list: Object[] = [];
   private jar = new CookieJar();
-
   private client = wrapper(axios.create({
     jar: this.jar,
     withCredentials: true
@@ -34,14 +34,28 @@ export class AppController {
         withCredentials: true
       }
     )
-
+    this.list = []
     const collectInfo = await this.client.get('http://192.168.1.75/m_departmentid.html')
-
     const $ = cheerio.load(collectInfo.data)
 
-    const tableInfo = $('.ModuleElement')
+    const tableInfo = $('.ItemListComponent tbody tr').each((index, element) => {
+      const row = $(element, element)
 
-    return collectInfo.data
+      const tdRow = row.find('td')
+
+      const id = $(tdRow[0]).text().trim()
+      const quantity = $(tdRow[1]).text().trim()
+
+      const list = {
+        id: id,
+        qtt: quantity
+      }
+
+      this.list.push(list)
+
+    }).html()
+
+    return this.list
   }
 
   @Get()
