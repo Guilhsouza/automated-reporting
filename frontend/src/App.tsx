@@ -1,11 +1,8 @@
 import './App.css'
 import { helloWorld } from './services/apiHello'
-import { useState } from 'react'
-import login from './services/login'
+import loginAndGetData from './services/login'
 
 function App() {
-  const [api, setApi] = useState(null)
-
   const handleClick = async () => {
     try {
       const response = await helloWorld()
@@ -14,10 +11,10 @@ function App() {
       throw e
     }
   }
-  const handleClickLogin = async () => {
+  const handleClickLoginGetData = async () => {
     try {
-      const response = await login()
-      console.log(response.data)
+      const response = await loginAndGetData()
+
       return response.data
     } catch (e) {
       throw e
@@ -28,7 +25,7 @@ function App() {
     <>
       <button onClick={handleClick}>Clique aqui para gerar um relatório de impressões</button>
       <br />
-      <button onClick={handleClickLogin} style={{ marginTop: '12px' }}>Faça login na plataforma</button>
+      <button onClick={handleClickLoginGetData} style={{ marginTop: '12px' }}>Faça login na plataforma</button>
     </>
   )
 }
