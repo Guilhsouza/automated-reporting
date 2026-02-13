@@ -3,7 +3,7 @@ import { AppService } from './app.service';
 import axios, { AxiosRequestConfig } from 'axios'
 import { wrapper } from 'axios-cookiejar-support';
 import { CookieJar } from 'tough-cookie';
-import express from 'express';
+import express, { response } from 'express';
 import qs from 'qs';
 import * as cheerio from 'cheerio'
 import XLSX from 'xlsx';
@@ -40,7 +40,7 @@ export class AppController {
     const collectInfo = await this.client.get('http://192.168.1.75/m_departmentid.html')
     const $ = cheerio.load(collectInfo.data)
 
-    const tableInfo = $('.ItemListComponent tbody tr').each((index, element) => {
+    $('.ItemListComponent tbody tr').each((index, element) => {
       const row = $(element)
 
       const tdRow = row.find('td')
@@ -60,6 +60,7 @@ export class AppController {
     const worksheet = XLSX.utils.json_to_sheet(this.list)
 
     const workbook = XLSX.utils.book_new()
+
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Relatório de impressão')
 
     XLSX.utils.sheet_add_aoa(worksheet, [["Centro de custo", "Quantidade"]], { origin: 'A1' })
