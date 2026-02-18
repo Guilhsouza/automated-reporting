@@ -1,16 +1,8 @@
 import './App.css'
-import { helloWorld } from './services/apiHello'
-import loginAndGetData from './services/login'
+import loginAndGetData from './services/loginAndGetData'
 
 function App() {
-  const handleClick = async () => {
-    try {
-      const response = await helloWorld()
-      return response
-    } catch (e) {
-      throw e
-    }
-  }
+
   const handleClickLoginGetData = async () => {
     try {
       const response = await loginAndGetData()
@@ -22,11 +14,17 @@ function App() {
   }
 
   return (
-    <>
-      <button onClick={handleClick}>Clique aqui para gerar um relatório de impressões</button>
-      <br />
-      <button onClick={handleClickLoginGetData} style={{ marginTop: '12px' }}>Faça login na plataforma</button>
-    </>
+    <div className='bg-blueGV w-lg flex flex-col h-96 rounded-lg'>
+      <div>
+        <h3 className='text-white font-semibold text-2xl mt-8 mb-14'>PAINEL DE RELATÓRIOS</h3>
+      </div>
+
+      <div className=''>
+        <button onClick={handleClickLoginGetData} className='text-black w-96'>Faça um <u>Relatório das Impressões</u></button>
+        <button className='text-black w-96 my-5'>Faça um <u>Relatório do Portal Freshdesk</u></button>
+        <button className='text-black w-96'>Faça um <u>Relatório do Consumo de Dados</u> de Internet</button>
+      </div>
+    </div>
   )
 }
 
