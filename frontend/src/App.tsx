@@ -1,12 +1,23 @@
 import './App.css'
 import logo from '/LOGO-COLOR-PNG-1024x274.png'
 import loginAndGetData from './services/loginAndGetData'
+import reportingFreshdesk from './services/reportingFreshdesk'
 
 function App() {
 
   const handleClickLoginGetData = async () => {
     try {
       const response = await loginAndGetData()
+
+      return response.data
+    } catch (e) {
+      throw e
+    }
+  }
+
+  const freshdeskReporting = async () => {
+    try {
+      const response = await reportingFreshdesk()
 
       return response.data
     } catch (e) {
@@ -29,9 +40,9 @@ function App() {
           <h3 className='text-white font-semibold text-lg md:text-2xl mt-8 mb-14'>PAINEL DE RELATÓRIOS</h3>
         </div>
 
-        <div className=''>
+        <div>
           <button onClick={handleClickLoginGetData} aria-label='Faça um Relatório das Impressões' className='text-black w-72 md:w-96'>Relatório de Impressões</button>
-          <button aria-label='Faça um Relatório do Portal Freshdesk' className='text-black w-72 md:w-96 my-5'>Relatório do Portal Freshdesk</button>
+          <button onClick={freshdeskReporting} aria-label='Faça um Relatório do Portal Freshdesk' className='text-black w-72 md:w-96 my-5'>Relatório do Portal Freshdesk</button>
           <button aria-label='Faça um Relatório do Consumo de Dados de Internet' className='text-black w-72 md:w-96'>Relatório do Consumo de Dados</button>
         </div>
       </div>
