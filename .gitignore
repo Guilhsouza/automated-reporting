@@ -3,6 +3,9 @@ backend/dist
 backend/node_modules
 backend/build
 
+backend/freshdesk-session.json
+.env
+
 frontend/dist
 frontend/node_modules
 frontend/build
