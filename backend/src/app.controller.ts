@@ -3,7 +3,7 @@ import { AppService } from './app.service';
 import axios, { AxiosRequestConfig } from 'axios'
 import { wrapper } from 'axios-cookiejar-support';
 import { CookieJar } from 'tough-cookie';
-import express, { response } from 'express';
+import express from 'express';
 import qs from 'qs';
 import * as cheerio from 'cheerio'
 import XLSX from 'xlsx';
@@ -79,8 +79,9 @@ export class AppController {
     res.send(buffer)
   }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Post('reportingFreshdesk')
+  async reportingFreshdesk() {
+    await this.appService.requestLast30DaysReport();
+    return { message: 'Relatório solicitado. Verifique seu email.' };
   }
 }
