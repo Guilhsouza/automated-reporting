@@ -11,7 +11,7 @@ export class AppService {
   async requestLast30DaysReport() {
 
     const browser = await chromium.launch({
-      headless: false,
+      headless: true,
       slowMo: 300,
     });
 
