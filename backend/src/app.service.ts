@@ -99,7 +99,6 @@ export class AppService {
       if (await checkbox.isChecked()) {
         await checkbox.click({ force: true });
         await page.waitForTimeout(300);
-        console.log(`❌ Desmarcado: ${field}`);
       }
     }
 
